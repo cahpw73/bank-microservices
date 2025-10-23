@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: ms-accounts
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
