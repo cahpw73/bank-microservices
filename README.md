@@ -69,28 +69,35 @@ cd bank-microservices
 ```
 
 ### 🔹 Compilar todo el proyecto
+
 ```bash
 mvnw.cmd clean install
 ```
 
 ### 🔹 Ejecutar `ms-customers`
+
 ```bash
 mvnw.cmd -pl ms-customers spring-boot:run
 ```
+
 El servicio se levantará por defecto en `http://localhost:8080`
 
 Health check:
+
 ```
 GET http://localhost:8080/actuator/health
 ```
 
 ### 🔹 Ejecutar `ms-accounts`
+
 ```bash
 mvnw.cmd -pl ms-accounts spring-boot:run
 ```
-Por defecto en `http://localhost:8081` *(puedes ajustar el puerto en `application.yml`)*
+
+Por defecto en `http://localhost:8081` _(puedes ajustar el puerto en `application.yml`)_
 
 Health check:
+
 ```
 GET http://localhost:8081/actuator/health
 ```
@@ -99,21 +106,21 @@ GET http://localhost:8081/actuator/health
 
 ## 🧩 Tecnologías principales
 
-| Componente | Tecnología |
-|-------------|-------------|
-| Lenguaje | Java 21 |
-| Framework | Spring Boot 3.5.6 |
-| Build System | Apache Maven (multimódulo) |
-| Documentación API | SpringDoc OpenAPI |
-| Validaciones | Jakarta Bean Validation |
-| Logging | Spring Boot Starter Logging |
-| Librerías comunes | Lombok, MapStruct |
-| IDE recomendado | VS Code o IntelliJ |
+| Componente        | Tecnología                  |
+| ----------------- | --------------------------- |
+| Lenguaje          | Java 21                     |
+| Framework         | Spring Boot 3.5.6           |
+| Build System      | Apache Maven (multimódulo)  |
+| Documentación API | SpringDoc OpenAPI           |
+| Validaciones      | Jakarta Bean Validation     |
+| Logging           | Spring Boot Starter Logging |
+| Librerías comunes | Lombok, MapStruct           |
+| IDE recomendado   | VS Code o IntelliJ          |
 
 ---
 
 ## 👨‍💻 Autor
 
-**Desarrollado por:** [Tu Nombre]  
+**Desarrollado por:** Christian Rene Alba Herrera
 **Tecnologías:** Java • Spring Boot • Docker • Maven  
 **Empresa:** Devsu (Prueba Técnica)
