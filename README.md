@@ -1,5 +1,11 @@
 # 🏦 Devsu Banking Microservices
 
+## 📦 Repositorio en GitHub
+
+El código fuente del proyecto se encuentra disponible en el siguiente repositorio:
+
+🔗 **https://github.com/cahpw73/bank-microservices**
+
 Proyecto técnico desarrollado para la prueba práctica de **Devsu**, utilizando arquitectura de **microservicios**, **Spring Boot 3.5.6**, **Java 21**, y enfoque de **Clean Architecture**.
 
 Cada microservicio cumple una responsabilidad clara y se comunica entre sí aplicando buenas prácticas de diseño, modularidad y mantenibilidad.
@@ -10,11 +16,11 @@ Cada microservicio cumple una responsabilidad clara y se comunica entre sí apli
 
 Este repositorio está organizado como un **Maven Multi‑Module**, lo que permite mantener una arquitectura limpia, modular y escalable:
 
-| Módulo | Descripción |
-|--------|----------------|
+| Módulo            | Descripción                                                                                 |
+| ----------------- | ------------------------------------------------------------------------------------------- |
 | **shared-kernel** | Contiene clases compartidas entre los microservicios (excepciones, DTOs, utilitarios, etc.) |
-| **ms-customers** | Gestiona Personas y Clientes. CRUD completo. |
-| **ms-accounts** | Gestiona Cuentas Bancarias y Movimientos. Genera reportes. |
+| **ms-customers**  | Gestiona Personas y Clientes. CRUD completo.                                                |
+| **ms-accounts**   | Gestiona Cuentas Bancarias y Movimientos. Genera reportes.                                  |
 
 Cada módulo puede compilarse y ejecutarse de manera independiente o todos juntos desde el proyecto raíz.
 
@@ -48,19 +54,19 @@ bank-microservices/
 
 ## 🧰 Tecnologías Implementadas
 
-| Componente | Tecnología |
-|------------|-------------|
-| Lenguaje | Java 21 |
-| Framework | Spring Boot 3.5.6 |
-| Arquitectura | Clean Architecture + DDD |
-| Build System | Maven Multi‑Module |
-| API Docs | SpringDoc OpenAPI 2 |
-| Validaciones | Jakarta Bean Validation |
-| Mapeos | MapStruct |
-| Logging | SLF4J + Spring Boot Logging |
-| DB | MySQL 8.4 |
-| Contenedores | Docker & Compose |
-| API Testing | Postman |
+| Componente   | Tecnología                  |
+| ------------ | --------------------------- |
+| Lenguaje     | Java 21                     |
+| Framework    | Spring Boot 3.5.6           |
+| Arquitectura | Clean Architecture + DDD    |
+| Build System | Maven Multi‑Module          |
+| API Docs     | SpringDoc OpenAPI 2         |
+| Validaciones | Jakarta Bean Validation     |
+| Mapeos       | MapStruct                   |
+| Logging      | SLF4J + Spring Boot Logging |
+| DB           | MySQL 8.4                   |
+| Contenedores | Docker & Compose            |
+| API Testing  | Postman                     |
 
 ---
 
@@ -124,11 +130,11 @@ docker compose up -d
 
 Servicios disponibles:
 
-| Servicio | URL |
-|----------|------|
-| MySQL | localhost:3307 |
+| Servicio     | URL                   |
+| ------------ | --------------------- |
+| MySQL        | localhost:3307        |
 | ms-customers | http://localhost:8080 |
-| ms-accounts | http://localhost:8081 |
+| ms-accounts  | http://localhost:8081 |
 
 ---
 
@@ -156,7 +162,7 @@ Importar → Ejecutar en este orden recomendado:
 ✅ Movimientos (depósitos y retiros con validación de saldo)  
 ✅ Cálculo de saldo disponible  
 ✅ Reporte por fechas y cliente  
-✅ Comunicación ms-accounts → ms-customers vía REST  
+✅ Comunicación ms-accounts → ms-customers vía REST
 
 ---
 
@@ -164,8 +170,3 @@ Importar → Ejecutar en este orden recomendado:
 
 Desarrollado por **Christian Alba Herrera**  
 ⭐ Prueba Técnica Devsu – Microservicios Bancarios
-
----
-
-¿Mejoras futuras? Observabilidad (Logs estructurados, Tracing), Mensajería (RabbitMQ), Seguridad (JWT) y CI/CD.
-
