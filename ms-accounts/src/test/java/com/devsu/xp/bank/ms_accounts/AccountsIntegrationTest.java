@@ -11,8 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test") 
 class AccountsIntegrationTest {
 
   @LocalServerPort
@@ -23,9 +25,10 @@ class AccountsIntegrationTest {
 
   @Test
   void createAccount_registerDeposit_thenListMovements() {
+    String unique = String.valueOf(System.nanoTime());
     // 1) Crear cuenta
     Map<String, Object> account = new HashMap<>();
-    account.put("number", "ACC-0001");
+    account.put("number", "ACC-" + unique);
     account.put("type", "SAVINGS");
     account.put("openingBalance", 1000.0);
     account.put("status", true);

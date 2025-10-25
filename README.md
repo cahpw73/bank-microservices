@@ -1,86 +1,97 @@
-# 🏦 Bank Microservices
+# 🏦 Devsu Banking Microservices
 
-Proyecto técnico desarrollado como parte de una prueba práctica para **Devsu**, que implementa una arquitectura basada en **microservicios con Spring Boot 3.5.6 y Java 21**.
+Proyecto técnico desarrollado para la prueba práctica de **Devsu**, utilizando arquitectura de **microservicios**, **Spring Boot 3.5.6**, **Java 21**, y enfoque de **Clean Architecture**.
 
-Cada microservicio está diseñado para cumplir responsabilidades específicas dentro de un sistema bancario simplificado, aplicando **buenas prácticas**, **arquitectura limpia** y principios de **modularidad**.
-
----
-
-## 📘 Descripción del proyecto
-
-El proyecto se estructura como un **Maven Multimodule**, compuesto por:
-
-- **`shared-kernel`**  
-  Módulo común con DTOs, excepciones y clases compartidas entre los microservicios.
-
-- **`ms-customers`**  
-  Microservicio encargado de la gestión de **personas y clientes**, incluyendo operaciones CRUD sobre la entidad `Cliente`.
-
-- **`ms-accounts`**  
-  Microservicio encargado de la gestión de **cuentas y movimientos**, permitiendo registrar depósitos, retiros y generar reportes.
-
-Cada módulo se compila y ejecuta de forma independiente, pero comparten configuración y dependencias gestionadas desde el **proyecto padre (`bank-microservices`)**.
+Cada microservicio cumple una responsabilidad clara y se comunica entre sí aplicando buenas prácticas de diseño, modularidad y mantenibilidad.
 
 ---
 
-## 🧱 Estructura de carpetas
+## 📘 Descripción General
+
+Este repositorio está organizado como un **Maven Multi‑Module**, lo que permite mantener una arquitectura limpia, modular y escalable:
+
+| Módulo | Descripción |
+|--------|----------------|
+| **shared-kernel** | Contiene clases compartidas entre los microservicios (excepciones, DTOs, utilitarios, etc.) |
+| **ms-customers** | Gestiona Personas y Clientes. CRUD completo. |
+| **ms-accounts** | Gestiona Cuentas Bancarias y Movimientos. Genera reportes. |
+
+Cada módulo puede compilarse y ejecutarse de manera independiente o todos juntos desde el proyecto raíz.
+
+---
+
+## 📂 Estructura del Proyecto
 
 ```
 bank-microservices/
-├─ pom.xml                     # POM principal (packaging=pom)
+├─ pom.xml                       # POM principal (packaging=pom)
 │
-├─ shared-kernel/              # Módulo compartido (jar)
+├─ shared-kernel/                # Módulo compartido (JAR)
 │  ├─ pom.xml
-│  └─ src/main/java/com/devsu/xp/bank/shared/
+│  └─ src/main/java/com/devsu/xp/bank/shared_kernel/
 │
-├─ ms-customers/               # Microservicio de clientes/personas
+├─ ms-customers/                 # Microservicio de clientes/personas
 │  ├─ pom.xml
-│  ├─ src/main/java/com/devsu/xp/bank/customers/
+│  ├─ src/main/java/com/devsu/xp/bank/ms_customers/
 │  └─ src/main/resources/application.yml
 │
-├─ ms-accounts/                # Microservicio de cuentas/movimientos
+├─ ms-accounts/                  # Microservicio de cuentas/movimientos
 │  ├─ pom.xml
-│  ├─ src/main/java/com/devsu/xp/bank/accounts/
+│  ├─ src/main/java/com/devsu/xp/bank/ms_accounts/
 │  └─ src/main/resources/application.yml
 │
-└─ infra/                      # (opcional) Docker, Postman, scripts SQL
-   ├─ docker/
-   └─ postman/
+└─ infra/                        # Scripts externos (Postman, Docker, SQL)
+   └─ postman/                   # Colección y environment de Postman
 ```
 
 ---
 
-## ⚙️ Requisitos
+## 🧰 Tecnologías Implementadas
 
-- **Java 21**
-- **Maven 3.9+**
-- **VS Code o IntelliJ IDEA**
-- **Docker (opcional)** para futuras integraciones
-- **Postman** (para pruebas REST)
+| Componente | Tecnología |
+|------------|-------------|
+| Lenguaje | Java 21 |
+| Framework | Spring Boot 3.5.6 |
+| Arquitectura | Clean Architecture + DDD |
+| Build System | Maven Multi‑Module |
+| API Docs | SpringDoc OpenAPI 2 |
+| Validaciones | Jakarta Bean Validation |
+| Mapeos | MapStruct |
+| Logging | SLF4J + Spring Boot Logging |
+| DB | MySQL 8.4 |
+| Contenedores | Docker & Compose |
+| API Testing | Postman |
 
 ---
 
-## ▶️ Cómo ejecutar los microservicios
+## ⚙️ Requisitos Previos
 
-Asegúrate de estar en la carpeta raíz del proyecto:
+- Java 21 instalado
+- Maven 3.9+
+- Docker Desktop (opcional para despliegue)
+- Postman
+
+> **Tip:** Puedes ejecutar localmente o con Docker Compose.
+
+---
+
+## ▶️ Ejecución Local
+
+Desde la raíz del proyecto:
+
+### 1️⃣ Compilar todo
 
 ```bash
-cd bank-microservices
+./mvnw clean install
 ```
 
-### 🔹 Compilar todo el proyecto
+### 2️⃣ Ejecutar Microservicios
+
+#### **ms-customers (Puerto 8080)**
 
 ```bash
-mvnw.cmd clean install
+./mvnw -pl ms-customers spring-boot:run
 ```
-
-### 🔹 Ejecutar `ms-customers`
-
-```bash
-mvnw.cmd -pl ms-customers spring-boot:run
-```
-
-El servicio se levantará por defecto en `http://localhost:8080`
 
 Health check:
 
@@ -88,13 +99,11 @@ Health check:
 GET http://localhost:8080/actuator/health
 ```
 
-### 🔹 Ejecutar `ms-accounts`
+#### **ms-accounts (Puerto 8081)**
 
 ```bash
-mvnw.cmd -pl ms-accounts spring-boot:run
+./mvnw -pl ms-accounts spring-boot:run
 ```
-
-Por defecto en `http://localhost:8081` _(puedes ajustar el puerto en `application.yml`)_
 
 Health check:
 
@@ -104,23 +113,59 @@ GET http://localhost:8081/actuator/health
 
 ---
 
-## 🧩 Tecnologías principales
+## 🐳 Ejecución con Docker
 
-| Componente        | Tecnología                  |
-| ----------------- | --------------------------- |
-| Lenguaje          | Java 21                     |
-| Framework         | Spring Boot 3.5.6           |
-| Build System      | Apache Maven (multimódulo)  |
-| Documentación API | SpringDoc OpenAPI           |
-| Validaciones      | Jakarta Bean Validation     |
-| Logging           | Spring Boot Starter Logging |
-| Librerías comunes | Lombok, MapStruct           |
-| IDE recomendado   | VS Code o IntelliJ          |
+Desde la raíz del proyecto:
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+Servicios disponibles:
+
+| Servicio | URL |
+|----------|------|
+| MySQL | localhost:3307 |
+| ms-customers | http://localhost:8080 |
+| ms-accounts | http://localhost:8081 |
+
+---
+
+## 🧪 Pruebas con Postman
+
+En `infra/postman` encontrarás:
+
+- Colección de endpoints
+- Environment con variables dinámicas
+
+Importar → Ejecutar en este orden recomendado:
+
+1. Crear Cliente
+2. Crear Cuenta
+3. Registrar Movimientos (+ / -)
+4. Consultar Movimientos
+5. Generar Reporte
+
+---
+
+## 📜 Funcionalidades Cubiertas
+
+✅ CRUD de Clientes  
+✅ CRUD de Cuentas  
+✅ Movimientos (depósitos y retiros con validación de saldo)  
+✅ Cálculo de saldo disponible  
+✅ Reporte por fechas y cliente  
+✅ Comunicación ms-accounts → ms-customers vía REST  
 
 ---
 
 ## 👨‍💻 Autor
 
-**Desarrollado por:** Christian Rene Alba Herrera
-**Tecnologías:** Java • Spring Boot • Docker • Maven  
-**Empresa:** Devsu (Prueba Técnica)
+Desarrollado por **Christian Alba Herrera**  
+⭐ Prueba Técnica Devsu – Microservicios Bancarios
+
+---
+
+¿Mejoras futuras? Observabilidad (Logs estructurados, Tracing), Mensajería (RabbitMQ), Seguridad (JWT) y CI/CD.
+
