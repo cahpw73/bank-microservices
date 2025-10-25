@@ -1,0 +1,92 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: devsu-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: devsu_bank
+      TZ: America/La_Paz
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$${MYSQL_ROOT_PASSWORD} || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 30s
+    networks:
+      - bank-net
+
+  ms-customers:
+    build:
+      context: .
+      dockerfile: ms-customers/Dockerfile
+    container_name: ms-customers
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Spring basics
+      SPRING_APPLICATION_NAME: ms-customers
+      SERVER_PORT: 8080
+
+      # Datasource (apunta al nombre del servicio 'db' en la red de compose)
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/devsu_bank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+
+      # JPA dev mode
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_OPEN_IN_VIEW: "false"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+
+      TZ: America/La_Paz
+    ports:
+      - "8080:8080"
+    networks:
+      - bank-net
+
+  ms-accounts:
+    build:
+      context: .
+      dockerfile: ms-accounts/Dockerfile
+    container_name: ms-accounts
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      ms-customers:
+        condition: service_started
+    environment:
+      SPRING_APPLICATION_NAME: ms-accounts
+      SERVER_PORT: 8081
+
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/devsu_bank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_OPEN_IN_VIEW: "false"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+
+      # URL interna para llamar ms-customers dentro de la red de compose
+      MS_CUSTOMERS_BASE_URL: http://ms-customers:8080
+
+      TZ: America/La_Paz
+    ports:
+      - "8081:8081"
+    networks:
+      - bank-net
+
+volumes:
+  db-data:
+
+networks:
+  bank-net:
+    driver: bridge

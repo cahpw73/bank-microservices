@@ -27,4 +27,4 @@ server:
 
 ms:
   customers:
-    base-url: http://localhost:8080
+    base-url: ${MS_CUSTOMERS_BASE_URL:http://localhost:8080}
