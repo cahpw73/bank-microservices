@@ -1,6 +1,6 @@
 # Postman Collection & Environment - Devsu Banking Microservices
 
-Este archivo README describe cómo importar y utilizar la colección de Postman para probar los microservicios **ms-customers** y **ms-accounts** del reto Devsu.
+Este archivo README describe cómo importar y utilizar la colección de Postman para probar los microservicios **ms-customers** y **ms-accounts**.
 
 ---
 
@@ -29,14 +29,12 @@ Este archivo README describe cómo importar y utilizar la colección de Postman 
 
 ## 🔧 Variables del Environment
 
-Estas variables permiten reutilizar IDs sin copiar/pegar manualmente.
+Estas variables permiten reutilizar IDs, se necesita copiar/pegar manualmente.
 
 | Variable      | Ejemplo de Valor                       | Descripción                                        |
 | ------------- | -------------------------------------- | -------------------------------------------------- |
 | `customer_id` | `c4a18db5-b20f-4aba-afd1-a915628cc18d` | Se debe actualizar manualmente al crear un cliente |
 | `account_id`  | `677e377b-58ca-41e2-99f9-28ca800ca7a6` | Se debe actualizar manualmente al crear una cuenta |
-
-Los scripts incluidos actualizan estas variables automáticamente después de realizar los `POST` correspondientes.
 
 ---
 
@@ -81,8 +79,3 @@ Los scripts incluidos actualizan estas variables automáticamente después de re
 - La colección asume ejecución **local** de los MS.
 - Si se ejecuta mediante Docker, verificar hosts/puertos.
 - No requiere autenticación para el reto.
-
----
-
-¡Listo! 🎉  
-Con esta colección podrás probar de forma rápida todos los casos del reto Devsu.
